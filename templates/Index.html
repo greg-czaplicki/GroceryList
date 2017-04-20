@@ -48,11 +48,17 @@
 <body>
 <div>
     <h1>Grocery List:</h1>
-    <ul>
-        {% for item in item_list %}
-            <li>{{ item.name }}</li>
-        {% endfor %}
-    </ul>
+
+    {% regroup results by category as results_by_category %}
+    {% for i in results_by_category %}
+        <h3>{{ i.grouper }}</h3>
+        <ul>
+            {% for p in i.list %}
+                <li>{{ p.name }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
 </div>
 </body>
 </html>

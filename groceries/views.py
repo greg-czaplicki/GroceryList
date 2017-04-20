@@ -1,9 +1,12 @@
-from django.views.generic import ListView
+import operator
+
+from django.shortcuts import render
 
 from groceries.models import *
 
 
-# Create your views here.
-class HomeTemplateView(ListView):
-    template_name = 'Index.html'
-    model = Item
+def Home(request):
+    results = Item.objects.all()
+    item_order = sorted(results, key=operator.attrgetter('name'))
+    ordered = sorted(item_order, key=operator.attrgetter('category'))
+    return render(request, 'Index.html', {'results': ordered})
