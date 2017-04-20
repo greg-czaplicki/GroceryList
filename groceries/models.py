@@ -1,205 +1,44 @@
 from django.db import models
 
+PRODUCE = 'PRODUCE'
+MEAT_SEAFOOD = 'MEAT/SEAFOOD'
+DAIRY = 'DAIRY'
+FROZEN_FOODS = 'FROZEN FOODS'
+BREADS_PASTA = 'BREADS/PASTAS'
+CANNED_GOODS = 'CANNED GOODS'
+BREAKFAST = 'BREAKFAST'
+SNACKS = 'SNACKS'
+BAKING_CONDIMENTS = 'BAKING/CONDIMENTS'
+BEVERAGES = 'BEVERAGES'
+PAPER_PLASTIC = 'PAPER/PLASTIC'
+CLEANING_PRODUCTS = 'CLEANING PRODUCTS'
+TOILETRIES = 'TOILETRIES'
+MISC = 'MISC'
 
-class Produce(models.Model):
+GROCERY_ITEMS = (
+    (PRODUCE, 'Produce'),
+    (MEAT_SEAFOOD, 'Meat/Seafood'),
+    (DAIRY, 'Dairy'),
+    (FROZEN_FOODS, 'Frozen Foods'),
+    (BREADS_PASTA, 'Breads/Pasta'),
+    (CANNED_GOODS, 'Canned Goods'),
+    (BREAKFAST, 'Breakfast'),
+    (SNACKS, 'Snacks'),
+    (BAKING_CONDIMENTS, 'Baking/Condiments'),
+    (BEVERAGES, 'Beverages'),
+    (PAPER_PLASTIC, 'Paper/Plastic'),
+    (CLEANING_PRODUCTS, 'Cleaning Products'),
+    (TOILETRIES, 'Toiletries'),
+    (MISC, 'Miscellaneous')
+)
+
+
+class Item(models.Model):
+    category = models.CharField(max_length=32, choices=GROCERY_ITEMS)
     name = models.CharField(max_length=32)
     quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Produce'
-        verbose_name_plural = 'Produce'
-
-    def get_cname(self):
-        class_name = 'Produce'
-        return class_name
+    weight = models.DecimalField(null=True, blank=True, max_digits=4,
+                                 decimal_places=2)
 
     def __str__(self):
-        return self.name
-
-
-class Meat_Seafood(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Meat/Seafood'
-        verbose_name_plural = 'Meat/Seafood'
-
-    def get_cname(self):
-        class_name = 'Meat/Seafood'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Dairy(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Dairy'
-        verbose_name_plural = 'Dairy'
-
-    def get_cname(self):
-        class_name = 'Dairy'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Frozen_Food(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Frozen Food'
-        verbose_name_plural = 'Frozen Food'
-
-    def get_cname(self):
-        class_name = 'Frozen Food'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Breads_Pasta(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Breads/Pasta'
-        verbose_name_plural = 'Breads/Pasta'
-
-    def get_cname(self):
-        class_name = 'Breads/Pasta'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Canned_Goods(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Canned Goods'
-        verbose_name_plural = 'Canned Goods'
-
-    def get_cname(self):
-        class_name = 'Canned Goods'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Snacks(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Snacks'
-        verbose_name_plural = 'Snacks'
-
-    def get_cname(self):
-        class_name = 'Snacks'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Baking_Condiments(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Baking Condiments'
-        verbose_name_plural = 'Baking Condiments'
-
-    def get_cname(self):
-        class_name = 'Baking Condiments'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Paper_Plastic(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Paper/Plastic'
-        verbose_name_plural = 'Paper/Plastic'
-
-    def get_cname(self):
-        class_name = 'Paper/Plastic'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Cleaning_Products(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Cleaning Products'
-        verbose_name_plural = 'Cleaning Products'
-
-    def get_cname(self):
-        class_name = 'Cleaning Products'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Toiletries(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Toiletries'
-        verbose_name_plural = 'Toiletries'
-
-    def get_cname(self):
-        class_name = 'Toiletries'
-        return class_name
-
-    def __str__(self):
-        return self.name
-
-
-class Misc(models.Model):
-    name = models.CharField(max_length=32)
-    quantity = models.IntegerField(null=True, blank=True)
-    weight = models.IntegerField(null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Misc'
-        verbose_name_plural = 'Misc'
-
-    def get_cname(self):
-        class_name = 'Misc.'
-        return class_name
-
-    def __str__(self):
-        return self.name
+        return self.name + ' - ' + self.category

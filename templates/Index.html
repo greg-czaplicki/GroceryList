@@ -43,19 +43,15 @@
     </style>
 </head>
 
+{#TODO: Add submit button#}
+
 <body>
 <div>
     <h1>Grocery List:</h1>
-    <h3>{{ snacks_name }}:</h3>
-    <ul>{% for i in snacks %}
-        <li>{{ i.name }}</li>
-    {% endfor %}
-    </ul>
-
-    <h3>{{ paper_name }}:</h3>
-    <ul>{% for i in paper %}
-        <li>{{ i.name }}</li>
-    {% endfor %}
+    <ul>
+        {% for item in item_list %}
+            <li>{{ item.name }}</li>
+        {% endfor %}
     </ul>
 </div>
 </body>

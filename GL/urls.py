@@ -16,9 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from groceries import views
+from groceries.views import HomeTemplateView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.Index, name='Index')
+    url(r'^$', HomeTemplateView.as_view(), name='Index')
 ]
