@@ -19,14 +19,23 @@ def Home(request):
         quantity = request.POST.get('quantity')
         weight = request.POST.get('weight')
 
+        if quantity or weight:
+            quantity = quantity,
+            weight = weight,
+        else:
+            quantity = None
+            weight = None
+
         newItem = Item.objects.create(
             name = name,
             category = category,
-            quantity = str(quantity),
-            weight = str(weight),
+            quantity = quantity,
+            weight = weight
         )
         newItem.save()
-        return HttpResponseRedirect('/')
+
+        return HttpResponseRedirect('')
+
     else:
         results = Item.objects.all()
         item_order = sorted(results, key=operator.attrgetter('name'))

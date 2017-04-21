@@ -36,9 +36,9 @@ GROCERY_ITEMS = (
 class Item(models.Model):
     name = models.CharField(max_length=32)
     category = models.CharField(max_length=32, choices=GROCERY_ITEMS)
-    quantity = models.IntegerField(null=True, blank=True)
+    quantity = models.IntegerField(null=True, blank=True, default='')
     weight = models.DecimalField(null=True, blank=True, max_digits=4,
-                                 decimal_places=2)
+                                 decimal_places=2, default='')
 
     def __str__(self):
         return self.name + ' - ' + self.category

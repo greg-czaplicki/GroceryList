@@ -17,12 +17,11 @@
 
 </head>
 
-{#TODO: Add submit button#}
 
 <body>
 <div>
     <h1>Grocery List:</h1>
-    <form onsubmit="return false">
+    <form id="new_item">
         {% csrf_token %}
         Item: <br>
         <input type="text" id="name"> <br>
@@ -32,10 +31,10 @@
             <option value="DAIRY">Dairy</option>
         </select><br>
         Quantity: <br>
-        <input type="text" id="quantity"><br>
+        <input type="number" id="quantity"><br>
         Weight: <br>
-        <input type="text" id="weight"><br>
-        <button onclick="AddItem()">Add Item</button>
+        <input type="number" id="weight"><br>
+        <input type="submit" value="Add Item">
     </form>
 
     {% regroup results by category as results_by_category %}
@@ -62,7 +61,8 @@
 
 <script type="text/javascript">
 
-    function AddItem() {
+    $(document).on('submit', '#new_item', function () {
+
         $.ajax({
             type: 'POST',
             url: '',
@@ -76,7 +76,7 @@
                 quantity: $('#quantity').val()
             }
         });
-    }
+    });
 
 </script>
 
