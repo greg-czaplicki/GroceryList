@@ -1,38 +1,47 @@
-import json
 import operator
 
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 
 from groceries.models import *
 
 
-
-
 def Home(request):
     if request.method == 'POST':
-        print('*'*200)
+        print('*' * 200)
         print(request.POST)
-        print('*'*200)
+        print('*' * 200)
         name = request.POST.get('name')
         category = request.POST.get('category')
         quantity = request.POST.get('quantity')
         weight = request.POST.get('weight')
 
-        if quantity or weight:
-            quantity = quantity,
-            weight = weight,
+        if quantity:
+            quantity = quantity
         else:
             quantity = None
+
+        if weight:
+            weight = weight
+        else:
             weight = None
 
-        newItem = Item.objects.create(
-            name = name,
-            category = category,
-            quantity = quantity,
-            weight = weight
-        )
-        newItem.save()
+        search = Item.objects.filter(name=name)
+
+        if search:
+            print('exists')
+            update = Item.objects.get(name=name)
+            update.quantity = 1
+            update.quantity += 1
+            update.save()
+        else:
+            item = Item.objects.create(
+                name=name.title(),
+                category=category,
+                quantity=quantity,
+                weight=weight
+            )
+            item.save()
 
         return HttpResponseRedirect('')
 
