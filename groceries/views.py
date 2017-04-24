@@ -12,6 +12,7 @@ def Home(request):
         print(request.POST)
         print('*' * 200)
         name = request.POST.get('name')
+        name = name.title()
         category = request.POST.get('category')
         quantity = request.POST.get('quantity')
         weight = request.POST.get('weight')
@@ -31,8 +32,16 @@ def Home(request):
         if search:
             print('exists')
             update = Item.objects.get(name=name)
-            update.quantity = 1
-            update.quantity += 1
+            print(update.quantity)
+            if not quantity == None:
+                add_quant = int(quantity)
+                update.quantity += add_quant
+            else:
+                if update.quantity == None:
+                    new_quant = 2
+                    update.quantity = new_quant
+                else:
+                    update.quantity += 1
             update.save()
         else:
             item = Item.objects.create(
