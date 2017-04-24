@@ -20,28 +20,21 @@ def Home(request):
         if quantity:
             quantity = quantity
         else:
-            quantity = None
+            quantity = 1
 
         if weight:
             weight = weight
         else:
-            weight = None
+            weight = 0
 
         search = Item.objects.filter(name=name)
 
         if search:
-            print('exists')
             update = Item.objects.get(name=name)
-            print(update.quantity)
-            if not quantity == None:
-                add_quant = int(quantity)
-                update.quantity += add_quant
-            else:
-                if update.quantity == None:
-                    new_quant = 2
-                    update.quantity = new_quant
-                else:
-                    update.quantity += 1
+            add_quant = quantity
+            update.quantity += int(add_quant)
+            add_weight = weight
+            update.weight += int(add_weight)
             update.save()
         else:
             item = Item.objects.create(

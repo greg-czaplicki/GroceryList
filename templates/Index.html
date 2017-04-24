@@ -55,11 +55,19 @@
         <ul>
             {% for p in i.list %}
                 <li>{{ p.name }}
-                    {% if p.weight %}
-                        - {{ p.weight }} oz/lbs
-                    {% endif %}
-                    {% if p.quantity %}
+                    {% if p.quantity > 1 %}
                         - {{ p.quantity }}
+                    {% endif %}
+
+                    {% if p.weight > 8 and p.quantity > 1 %}
+                        - [{{ p.weight }} oz. total]
+
+                    {% elif p.weight > 8 %}
+                        - {{ p.weight }} oz.
+
+                    {% elif p.weight > 0 %}
+                        - {{ p.weight }} lbs.
+                    {% else %}
                     {% endif %}
                 </li>
 
