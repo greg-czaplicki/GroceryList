@@ -1,7 +1,9 @@
 import operator
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.views.generic import DeleteView
 
 from groceries.models import *
 
@@ -52,3 +54,9 @@ def Home(request):
         item_order = sorted(results, key=operator.attrgetter('name'))
         ordered = sorted(item_order, key=operator.attrgetter('category'))
         return render(request, 'Index.html', {'results': ordered})
+
+
+def DeleteAll(request):
+    entire_db = Item.objects.all()
+    entire_db.delete()
+    return redirect(Home)

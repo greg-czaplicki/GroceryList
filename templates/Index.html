@@ -7,6 +7,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static '/style.css' %}">
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -21,12 +22,12 @@
 <body>
 <div>
     <h1>Grocery List:</h1>
-    <form id="new_item">
+    <form id="new_item" class="form-group">
         {% csrf_token %}
         Item: <br>
-        <input type="text" id="name"> <br>
+        <input type="text" id="name" class="form-control"> <br>
         Category: <br>
-        <select id="category">
+        <select id="category" class="form-control">
             <option value="Produce">Produce</option>
             <option value="Dairy">Dairy</option>
             <option value="Meat/Seafood">Meat/Seafood</option>
@@ -43,10 +44,13 @@
             <option value="Misc.">Misc.</option>
         </select><br>
         Quantity: <br>
-        <input type="text" id="quantity"><br>
+        <input type="text" id="quantity" placeholder="optional"
+               class="form-control"><br>
         Weight: <br>
-        <input type="text" id="weight"><br>
-        <input type="submit" value="Add Item">
+        <input type="text" id="weight" placeholder="optional"
+               class="form-control"><br><br>
+        <input type="submit" value="Add Item" class="btn btn-success
+        btn-block">
     </form>
 
     {% regroup results by category as results_by_category %}
@@ -68,13 +72,16 @@
                     {% elif p.weight > 0 %}
                         - {{ p.weight }} lbs.
                     {% else %}
+
                     {% endif %}
                 </li>
 
             {% endfor %}
         </ul>
     {% endfor %}
-
+    <br>
+<a href="{% url 'Delete' %}" class="btn btn-danger btn-block">Clear Grocery
+                                                         List?</a>
 </div>
 
 </body>
