@@ -3,10 +3,7 @@ html {
 }
 
 body {
-    background: #67B26F; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #4ca2cd, #67B26F); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #4ca2cd, #67B26F); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background: #30A9DE;
     margin: 0;
     padding: 0;
 }
@@ -36,4 +33,8 @@ div {
 
 h1 {
     text-align: center;
+}
+
+hr {
+    border-color: black;
 }

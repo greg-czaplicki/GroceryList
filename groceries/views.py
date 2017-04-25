@@ -1,9 +1,8 @@
 import operator
 
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse
-from django.views.generic import DeleteView
 
 from groceries.models import *
 
@@ -18,6 +17,10 @@ def Home(request):
         category = request.POST.get('category')
         quantity = request.POST.get('quantity')
         weight = request.POST.get('weight')
+
+        if not name.isalpha():
+            messages.warning(request, "Item must have a name!")
+            return HttpResponseRedirect(request.path)
 
         if quantity:
             quantity = quantity
@@ -40,7 +43,7 @@ def Home(request):
             update.save()
         else:
             item = Item.objects.create(
-                name=name.title(),
+                name=name,
                 category=category,
                 quantity=quantity,
                 weight=weight

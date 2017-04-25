@@ -7,7 +7,8 @@
     <meta charset="utf-8"/>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static '/style.css' %}">
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -26,22 +27,27 @@
         {% csrf_token %}
         Item: <br>
         <input type="text" id="name" class="form-control"> <br>
+        {% if messages %}
+            {% for message in messages %}
+                <h5 class="alert alert-danger">{{ message }}</h5><br>
+            {% endfor %}
+        {% endif %}
         Category: <br>
         <select id="category" class="form-control">
-            <option value="Produce">Produce</option>
-            <option value="Dairy">Dairy</option>
-            <option value="Meat/Seafood">Meat/Seafood</option>
-            <option value="Frozen Foods">Frozen Foods</option>
-            <option value="Breads/Pasta">Breads/Pasta</option>
-            <option value="Canned Goods">Canned Goods</option>
-            <option value="Breakfast">Breakfast</option>
-            <option value="Snacks">Snacks</option>
             <option value="Baking/Condiments">Baking/Condiments</option>
             <option value="Beverages">Beverages</option>
-            <option value="Paper/Plastic">Paper/Plastic</option>
+            <option value="Breads/Pasta">Breads/Pasta</option>
+            <option value="Breakfast">Breakfast</option>
+            <option value="Canned Goods">Canned Goods</option>
             <option value="Cleaning Products">Cleaning Products</option>
+            <option value="Dairy">Dairy</option>
+            <option value="Frozen Foods">Frozen Foods</option>
+            <option value="Meat/Seafood">Meat/Seafood</option>
+            <option value="Misc.">Miscellaneous</option>
+            <option value="Paper/Plastic">Paper/Plastic</option>
+            <option value="Produce">Produce</option>
+            <option value="Snacks">Snacks</option>
             <option value="Toiletries">Toiletries</option>
-            <option value="Misc.">Misc.</option>
         </select><br>
         Quantity: <br>
         <input type="text" id="quantity" placeholder="optional"
@@ -80,8 +86,8 @@
         </ul>
     {% endfor %}
     <br>
-<a href="{% url 'Delete' %}" class="btn btn-danger btn-block">Clear Grocery
-                                                         List?</a>
+    <a href="{% url 'Delete' %}" class="btn btn-danger btn-block">Clear Grocery
+                                                                  List?</a>
 </div>
 
 </body>

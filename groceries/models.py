@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Item(models.Model):
-    name = models.CharField(max_length=32)
+    name = models.CharField(max_length=32, blank=False)
     category = models.CharField(max_length=32)
     quantity = models.IntegerField(default=1)
     weight = models.DecimalField(default=0,
