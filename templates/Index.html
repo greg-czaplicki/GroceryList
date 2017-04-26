@@ -15,24 +15,20 @@
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous">
     </script>
-    <script src="{% static '/jquery.js' %}"></script>
-
 </head>
-
-
 <body>
 <div>
     <h1>Grocery List:</h1>
     <form id="new_item" class="form-group">
         {% csrf_token %}
-        Item: <br>
-        <input type="text" id="name" class="form-control"> <br>
+        <label for="name">Item:</label>
+        <input type="text" id="name" class="form-control">
         {% if messages %}
             {% for message in messages %}
-                <h5 class="alert alert-danger">{{ message }}</h5><br>
+                <h5 class="alert alert-danger">{{ message }}</h5>
             {% endfor %}
         {% endif %}
-        Category: <br>
+        <label for="category">Category:</label>
         <select id="category" class="form-control">
             <option value="Baking/Condiments">Baking/Condiments</option>
             <option value="Beverages">Beverages</option>
@@ -48,29 +44,40 @@
             <option value="Produce">Produce</option>
             <option value="Snacks">Snacks</option>
             <option value="Toiletries">Toiletries</option>
-        </select><br>
-        Quantity: <br>
+        </select>
+        <label for="quantity">Quantity: </label>
         <input type="text" id="quantity" placeholder="optional"
-               class="form-control"><br>
-        Weight: <br>
+               class="form-control">
+        <label for="weight">Weight:</label>
         <input type="text" id="weight" placeholder="optional"
-               class="form-control"><br><br>
-        <input type="submit" value="Add Item" class="btn btn-success
-        btn-block">
+               class="form-control">
+        <button type="submit" class="btn btn-success btn-block"
+                id="submit">Add Item
+        </button>
     </form>
-
+    <h1 id="result"></h1>
     {% regroup results by category as results_by_category %}
     {% for i in results_by_category %}
         <h3>{{ i.grouper }}</h3>
         <ul>
             {% for p in i.list %}
-                <li>{{ p.name }}
+                <li class="item"{% if p.is_complete %}
+                    style="text-decoration: line-through; color: #888888"
+                {% endif %}>
+
+                    <a href="/complete/{{ p.name }}"{% if p.is_complete %}
+                       style="text-decoration: line-through; color: #888888"
+                    {% endif %}>{{ p.name }}</a>
+
                     {% if p.quantity > 1 %}
                         - {{ p.quantity }}
                     {% endif %}
 
                     {% if p.weight > 8 and p.quantity > 1 %}
                         - [{{ p.weight }} oz. total]
+
+                    {% elif p.weight and p.quantity > 1 %}
+                        - [{{ p.weight }} lbs. total]
 
                     {% elif p.weight > 8 %}
                         - {{ p.weight }} oz.
@@ -81,7 +88,6 @@
 
                     {% endif %}
                 </li>
-
             {% endfor %}
         </ul>
     {% endfor %}
@@ -89,28 +95,38 @@
     <a href="{% url 'Delete' %}" class="btn btn-danger btn-block">Clear Grocery
                                                                   List?</a>
 </div>
-
 </body>
-
 <script type="text/javascript">
 
-    $(document).on('submit', '#new_item', function () {
+    var UA = navigator.userAgent,
+        iOS = !!(UA.match(/iPad|iPhone/i));
 
-        $.ajax({
-            type: 'POST',
-            url: '',
-            dataType: 'json',
-            async: true,
-            data: {
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                name: $('#name').val(),
-                category: $('#category').val(),
-                weight: $('#weight').val(),
-                quantity: $('#quantity').val()
-            }
+    if (iOS) {
+        $(document).on('touchstart', '#submit', function () {
+            $.ajax({
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    name: $('#name').val(),
+                    category: $('#category').val(),
+                    weight: $('#weight').val(),
+                    quantity: $('#quantity').val()
+                }
+            });
         });
-    });
-
+    } else {
+        $(document).on('submit', '#new_item', function () {
+            $.ajax({
+                type: 'POST',
+                data: {
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    name: $('#name').val(),
+                    category: $('#category').val(),
+                    weight: $('#weight').val(),
+                    quantity: $('#quantity').val()
+                }
+            });
+        });
+    }
 </script>
-
 </html>

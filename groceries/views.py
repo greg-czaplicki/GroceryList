@@ -1,4 +1,5 @@
 import operator
+from decimal import Decimal
 
 from django.contrib import messages
 from django.http import HttpResponseRedirect
@@ -18,7 +19,7 @@ def Home(request):
         quantity = request.POST.get('quantity')
         weight = request.POST.get('weight')
 
-        if not name.isalpha():
+        if not name.strip():
             messages.warning(request, "Item must have a name!")
             return HttpResponseRedirect(request.path)
 
@@ -39,7 +40,7 @@ def Home(request):
             add_quant = quantity
             update.quantity += int(add_quant)
             add_weight = weight
-            update.weight += int(add_weight)
+            update.weight += Decimal(add_weight)
             update.save()
         else:
             item = Item.objects.create(
@@ -62,4 +63,16 @@ def Home(request):
 def DeleteAll(request):
     entire_db = Item.objects.all()
     entire_db.delete()
+    return redirect(Home)
+
+
+def Completed(request, itemname):
+    item = Item.objects.get(name=itemname)
+
+    if item.is_complete == False:
+        item.is_complete = True
+    else:
+        item.is_complete = False
+
+    item.save()
     return redirect(Home)

@@ -20,6 +20,8 @@ from groceries import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.Home),
+    url(r'^$', views.Home, name='Home'),
     url(r'^delete/', views.DeleteAll, name='Delete'),
+    url(r'^complete/(?P<itemname>[\w\ ]+)', views.Completed,
+        name='Complete'),
 ]

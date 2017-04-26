@@ -8,6 +8,7 @@ class Item(models.Model):
     weight = models.DecimalField(default=0,
                                  max_digits=4,
                                  decimal_places=2)
+    is_complete = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name + ' - ' + self.category
