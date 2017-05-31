@@ -10,9 +10,6 @@ from groceries.models import *
 
 def Home(request):
     if request.method == 'POST':
-        print('*' * 200)
-        print(request.POST)
-        print('*' * 200)
         name = request.POST.get('name')
         name = name.title()
         category = request.POST.get('category')
@@ -21,37 +18,37 @@ def Home(request):
 
         if not name.strip():
             messages.warning(request, "Item must have a name!")
-            return HttpResponseRedirect(request.path)
-
-        if quantity:
-            quantity = quantity
+            return HttpResponseRedirect(Home)
         else:
-            quantity = 1
+            if quantity:
+                quantity = quantity
+            else:
+                quantity = 1
 
-        if weight:
-            weight = weight
-        else:
-            weight = 0
+            if weight:
+                weight = weight
+            else:
+                weight = 0
 
-        search = Item.objects.filter(name=name)
+            search = Item.objects.filter(name=name)
 
-        if search:
-            update = Item.objects.get(name=name)
-            add_quant = quantity
-            update.quantity += int(add_quant)
-            add_weight = weight
-            update.weight += Decimal(add_weight)
-            update.save()
-        else:
-            item = Item.objects.create(
-                name=name,
-                category=category,
-                quantity=quantity,
-                weight=weight
-            )
-            item.save()
-
-        return HttpResponseRedirect('')
+            if search == True:
+                update = Item.objects.get(name=name)
+                add_quant = quantity
+                update.quantity += int(add_quant)
+                add_weight = weight
+                update.weight += Decimal(add_weight)
+                update.save()
+                return render(request, Home)
+            else:
+                item = Item.objects.create(
+                    name=name,
+                    category=category,
+                    quantity=quantity,
+                    weight=weight
+                )
+                item.save()
+                return render(request, Home)
 
     else:
         results = Item.objects.all()
